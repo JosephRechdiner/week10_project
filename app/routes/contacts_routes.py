@@ -1,6 +1,4 @@
 from fastapi import APIRouter, Depends
-from database.create_connection import get_connection
-from mysql.connector import connection
 
 contact_router = APIRouter(prefix="/contanct")
 
