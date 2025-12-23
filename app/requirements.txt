@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+sqlmodel
+python-multipart
+mysql-connector-python
+dotenv
