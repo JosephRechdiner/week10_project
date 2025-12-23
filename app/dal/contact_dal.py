@@ -72,8 +72,7 @@ def delete_contact(id: int, conn: connection):
         if not user_to_delete:
             return False
 
-        cursor.execute(
-        "DELETE FROM contacts WHERE id = %s;",(id,))
+        cursor.execute("DELETE FROM contacts WHERE id = %s;",(id,))
         conn.commit()
         return True
 
