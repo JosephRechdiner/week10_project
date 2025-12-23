@@ -13,25 +13,26 @@ def list_contacts(conn: connection):
 def add_contact(first_name: str, last_name: str, phone_number: str, conn: connection):
     try:
         contact_id = contact_dal.create_contact(first_name, last_name, phone_number, conn)
-        return {"msg": "Contact created succesfully", "ID": contact_id}
+        return {"messege": "Contact created succesfully", "Id": contact_id}
     except Exception as e:
         raise HTTPException(status_code=409, detail=e)
 
-def update_contact_info(first_name: str, last_name: str, phone_number: str, conn: connection):
+
+def update_contact_info(id: int, first_name: str, last_name: str, phone_number: str, conn: connection):
     try:
-        has_updated = contact_dal.update_contact(first_name, last_name, phone_number, conn)
+        has_updated = contact_dal.update_contact(id, first_name, last_name, phone_number, conn)
         if has_updated:
-            return {"msg": "Contact updated succesfully"}
+            return {"messege": "Contact updated succesfully"}
         raise HTTPException(status_code=404, detail="Contact not found")
     except Exception as e:
         raise HTTPException(status_code=409, detail=e)
 
 
-def remove_contact(first_name: str, last_name: str, phone_number: str, conn: connection):
+def remove_contact(id: int, conn: connection):
     try:
-        has_deleted = contact_dal.update_contact(first_name, last_name, phone_number, conn)
+        has_deleted = contact_dal.delete_contact(id, conn)
         if has_deleted:
-            return {"msg": "Contact deleted succesfully"}
+            return {"messege": "Contact deleted succesfully"}
         raise HTTPException(status_code=404, detail="Contact not found")
     except Exception as e:
         raise HTTPException(status_code=409, detail=e)
