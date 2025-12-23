@@ -1,4 +1,4 @@
-from app.database.contact_model import Contact
+from database.contact_model import Contact
 
 def load_sql(path):
     try:
@@ -12,9 +12,10 @@ def convert_db_to_objects(rows):
     objects = []
     for row in rows:
         new_contact = Contact(
-            first_name=row[0],
-            last_name=row[1],
-            phone_number=row[2]
+            id=row[0],
+            first_name=row[1],
+            last_name=row[2],
+            phone_number=row[3]
             )
         objects.append(new_contact)
     return objects
