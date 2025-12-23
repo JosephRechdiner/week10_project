@@ -11,4 +11,5 @@ INSERT INTO contacts(First_name, Last_name, Phone_number)
 VALUES ("Yoseph", "Rechdiener", "054-2985519")
        ("David", "Rechdiener", "054-2986210")
        ("Talya", "Rechdiener", "054-2980112");
+       ("Eli", "Rechdiener", "054-3979494");
 
