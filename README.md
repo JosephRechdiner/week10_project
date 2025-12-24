@@ -1,55 +1,66 @@
-# Contact Project:
+# Contact Project
 
-## Purpose:
+## Purpose
+The final purpose of the project is to allow clients to save their contacts in a MySQL database through their localhost using FastAPI.
 
-The final purpose of the project is,
-to make clients able to save their contacts in mysql database through their local host using fastapi.
-
-## Set up:
-
+## Setup
 The setup is very simple:
-    - Go to your terminal 
-    - Make a directory for the program
-    - Clone the github URL, "git clone https://github.com/JosephRechdiner/week10_project.git"
-    - cd into it
-    - Type "docker compose up" (add -d if you want the program to run in the backround)
 
-    Thats it!
-    The program is runnig!
-    All you have to do next is, go to your browser, type: "127.0.0.1:8000" (add "/docs" if you want to use fastapi swagger) and test the routes!
+1. Open your terminal.
+2. Make a directory for the program.
+3. Clone the GitHub repository:
+   ```bash
+   git clone https://github.com/JosephRechdiner/week10_project.git
+   ```
+4. Change into the project directory:
+   ```bash
+   cd week10_project
+   ```
+5. Start the containers:
+   ```bash
+   docker compose up
+   ```
+   Add `-d` if you want the program to run in the background.
+
+The program is now running!  
+- Go to your browser and type `127.0.0.1:8000`.  
+- Add `/docs` to the URL if you want to use FastAPI Swagger to test the routes.
 
 To stop the program:
-    - Go back to your terminal
-    - Make sure you're under the correct directory and type "docker compose down".
+```bash
+docker compose down
+```
 
-## Database connection Info:
+## Database Connection Info
+We need to initialize a connection to the database and use it every time we want to operate on it.
 
-First we need to initialize connection to the database and use it every time we want to operate somthing in it.
-    -"database" - dir
-        - create_connection.py - file: has one function to get connection to the database
+- `database` directory
+  - `create_connection.py` — contains one function to get a connection to the database.
 
-fastapi has some special method called "Depends()", this function activate the function it recieves and initialize the result into some variable.
-fastapi also knows to stop the reading of the file and wait for the result of the above.
+FastAPI has a special method called `Depends()`, which activates the function it receives and initializes the result into a variable. FastAPI also waits for the result before continuing execution.
 
-## The app container Info:
+## App Container Info
+The project is divided into three layers:
 
-I decided to divide the whole programing proccess into 3 layers:
+1. **Application Layer (`routes` directory)**  
+   Responsible for creating FastAPI routes visible to the user and sending requests to the service layer.  
+   Routes:
+   - `GET /` — get all contacts
+   - `POST /` — add contact
+   - `PUT /` — update contact by ID
+   - `DELETE /` — delete contact by ID  
 
-    - Application layer ("routes" dir) - responsible for creating fastapi routes the user sees in the browser, and sending the request to the service layer.
-        - GET/ : get all contacts
-        - POST/ : add contact
-        - PUT/ : update contact (by id)
-        - DELELE/ : delete contact (by id)
+   HTTP exceptions will be raised if needed.
 
-        - obviously HTTP exeption will be raise if needed
+2. **Service Layer (`service` directory)**  
+   Responsible for sending requests to the DAL layer to perform CRUD operations and returning appropriate responses:  
+   - Status code 200 — returns relevant data
+   - Status code 404 — contact not found in the database
+   - Status code 409 — database access failed
 
-    - Service layer ("service" dir) - responsible for sending the request next to the dal layer to make CRUD operations, and returning the right response.
-        - status code 200 - the function will send whats relevant.
-        - status code 404 - the contact the user is asking to operante is not in the database.
-        - status code 409 - the access to the database has failed.
+3. **DAL Layer (`dal` directory)**  
+   Responsible for making CRUD operations and returning boolean values to indicate success.
 
-    - Dal layer ("dal" dir) - responsible for making CRUD operations and returning boolean variable for indecate success.
+## DB Container Info
+Built from the official MySQL image.
 
-## The db container Info:
-
-Build the containerrom the official mysql image.
