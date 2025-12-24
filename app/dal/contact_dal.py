@@ -43,8 +43,8 @@ class DalManager:
         cursor = conn.cursor()
         try:
             cursor.execute("SELECT * FROM contacts WHERE id = %s;", (id,))
-            user_to_update = cursor.fetchone()
-            if not user_to_update:
+            contact_to_update = cursor.fetchone()
+            if not contact_to_update:
                 return False
 
             cursor.execute(
@@ -64,7 +64,7 @@ class DalManager:
         finally:
             cursor.close()
 
-    @staticmethod
+
     def delete_contact(id: int, conn: connection):
         cursor = conn.cursor()
         try:
