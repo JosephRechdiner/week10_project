@@ -13,7 +13,6 @@ class DalManager:
 
         data = convert_db_to_objects(rows) 
         cursor.close()
-        conn.close()
         return data
 
     @staticmethod
@@ -46,15 +45,12 @@ class DalManager:
             contact_to_update = cursor.fetchone()
             if not contact_to_update:
                 return False
+            
+            for key, val in contact.items():
+                if val is not None:
+                    query = f'UPDATE contacts SET `{key}` = %s WHERE id = %s;'
+                    cursor.execute(query, (val, id,))
 
-            cursor.execute(
-            "UPDATE contacts " \
-            "SET first_name = %s, last_name = %s, phone_number = %s WHERE id = %s;",(
-                    contact["first_name"],
-                    contact["last_name"],
-                    contact["phone_number"],
-                    id)
-                )
             conn.commit()
             return True
 
@@ -64,7 +60,7 @@ class DalManager:
         finally:
             cursor.close()
 
-
+    @staticmethod
     def delete_contact(id: int, conn: connection):
         cursor = conn.cursor()
         try:

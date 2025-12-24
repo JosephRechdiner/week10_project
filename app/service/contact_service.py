@@ -7,7 +7,7 @@ class ServiceManager:
     def list_contacts(conn: connection):
         data = DalManager.get_all_contacts(conn)
         if not data:
-            return {"messege", "No contacts in DB"}
+            return {"messege": "No contacts in DB"}
         return data
 
     @staticmethod
@@ -15,8 +15,8 @@ class ServiceManager:
         try:
             contact_id = DalManager.create_contact(contact, conn)
             return {"messege": "Contact created succesfully", "Id": contact_id}
-        except:
-            raise HTTPException(status_code=409, detail="Could not access DB")
+        except Exception as e:
+            raise HTTPException(status_code=409, detail=str(e))
 
     @staticmethod
     def update_contact_info(id: int, contact: dict, conn: connection):
@@ -24,9 +24,9 @@ class ServiceManager:
             has_updated = DalManager.update_contact(id, contact, conn)
             if not has_updated:
                 raise HTTPException(status_code=404, detail="Contact not found")
-            return {"messege": "Contact deleted succesfully"}
-        except:
-            raise HTTPException(status_code=409, detail="Could not access DB")
+            return {"messege": "Contact updated succesfully"}
+        except Exception as e:
+            raise HTTPException(status_code=409, detail=str(e))
 
     @staticmethod
     def remove_contact(id: int, conn: connection):
@@ -35,5 +35,5 @@ class ServiceManager:
             if not has_deleted:
                 raise HTTPException(status_code=404, detail="Contact not found")
             return {"messege": "Contact deleted succesfully"}
-        except:
-            raise HTTPException(status_code=409, detail="Could not access DB")
+        except Exception as e:
+            raise HTTPException(status_code=409, detail=str(e))
