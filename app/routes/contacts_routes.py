@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from mysql.connector import connection
-from app.database.data_interactor import get_connection
+from database.data_interactor import get_connection
 from service.contact_service import ServiceManager
 from routes.schemas import CreateContact, UpdateContact
 
