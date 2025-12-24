@@ -11,10 +11,13 @@ services:
   mysql:
     image: mysql:8.0
     container_name: week10_db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}                     
+    env_file:
+      - .env                    
     ports:
-      - "3307:3306" 
+      - "3306:3306" 
     volumes:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - week10_volume:/var/lib/mysql/
+
+  volumes:
+    week10_volume:
