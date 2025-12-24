@@ -12,11 +12,11 @@ def get_all_contacts(conn: connection = Depends(get_connection)):
 
 @contact_router.post("/add_contact")
 def add_one_contact(contact: InputContact, conn: connection = Depends(get_connection)):
-    return ServiceManager.add_contact(contact.first_name, contact.last_name, contact.phone_number, conn)
+    return ServiceManager.add_contact(contact.dict, conn)
 
 @contact_router.put("/update_contact{id}")
 def update_contact_by_id(id: int, contact: InputContact, conn: connection = Depends(get_connection)):
-    return ServiceManager.update_contact_info(id, contact.first_name, contact.last_name, contact.phone_number, conn)
+    return ServiceManager.update_contact_info(id, contact.dict, conn)
 
 @contact_router.delete("/delete_contact/{id}")
 def delete_contact_by_id(id: int, conn: connection = Depends(get_connection)):

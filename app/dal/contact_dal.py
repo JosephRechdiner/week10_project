@@ -16,15 +16,15 @@ class DalManager:
         return data
 
 
-    def create_contact(first_name: str, last_name: str, phone_number: str, conn: connection):
+    def create_contact(contact: dict, conn: connection):
         cursor = conn.cursor()
         try: 
             cursor.execute(
                 "INSERT INTO contacts (first_name, last_name, phone_number) " \
                 "VALUES(%s, %s, %s);",(
-                    first_name,
-                    last_name,
-                    phone_number,
+                    contact["first_name"],
+                    contact["last_name"],
+                    contact["phone_number"],
                     )
                 )
             contact_id = cursor.lastrowid
@@ -38,7 +38,7 @@ class DalManager:
             cursor.close()
 
 
-    def update_contact(id: int, first_name: str, last_name: str, phone_number: str, conn: connection):
+    def update_contact(id: int, contact: dict, conn: connection):
         cursor = conn.cursor()
         try:
             cursor.execute("SELECT * FROM contacts WHERE id = %s;", (id,))
@@ -49,9 +49,9 @@ class DalManager:
             cursor.execute(
             "UPDATE contacts " \
             "SET first_name = %s, last_name = %s, phone_number = %s WHERE id = %s;",(
-                    first_name,
-                    last_name,
-                    phone_number,
+                    contact["first_name"],
+                    contact["last_name"],
+                    contact["phone_number"],
                     id)
                 )
             conn.commit()

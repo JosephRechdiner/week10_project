@@ -10,17 +10,17 @@ class ServiceManager:
         return data
 
 
-    def add_contact(first_name: str, last_name: str, phone_number: str, conn: connection):
+    def add_contact(contact: dict, conn: connection):
         try:
-            contact_id = DalManager.create_contact(first_name, last_name, phone_number, conn)
+            contact_id = DalManager.create_contact(contact, conn)
             return {"messege": "Contact created succesfully", "Id": contact_id}
         except:
             raise HTTPException(status_code=409, detail="Could not access DB")
 
 
-    def update_contact_info(id: int, first_name: str, last_name: str, phone_number: str, conn: connection):
+    def update_contact_info(id: int, contact: dict, conn: connection):
         try:
-            has_updated = DalManager.update_contact(id, first_name, last_name, phone_number, conn)
+            has_updated = DalManager.update_contact(id, contact, conn)
             if has_updated:
                 return {"messege": "Contact updated succesfully"}
             raise
