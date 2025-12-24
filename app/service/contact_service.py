@@ -21,18 +21,18 @@ class ServiceManager:
     def update_contact_info(id: int, contact: dict, conn: connection):
         try:
             has_updated = DalManager.update_contact(id, contact, conn)
-            if has_updated:
-                return {"messege": "Contact updated succesfully"}
-            raise
+            if not has_updated:
+                raise HTTPException(status_code=404, detail="Contact not found")
+            return {"messege": "Contact deleted succesfully"}
         except:
-            raise HTTPException(status_code=404, detail="Contact not found")
+            raise HTTPException(status_code=409, detail="Could not access DB")
 
 
     def remove_contact(id: int, conn: connection):
         try:
             has_deleted = DalManager.delete_contact(id, conn)
-            if has_deleted:
-                return {"messege": "Contact deleted succesfully"}
-            raise
+            if not has_deleted:
+                raise HTTPException(status_code=404, detail="Contact not found")
+            return {"messege": "Contact deleted succesfully"}
         except:
-            raise HTTPException(status_code=404, detail="Contact not found")
+            raise HTTPException(status_code=409, detail="Could not access DB")
