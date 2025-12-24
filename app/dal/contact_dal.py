@@ -2,6 +2,7 @@ from mysql.connector import connection
 from utils import convert_db_to_objects
 
 class DalManager:
+    @staticmethod
     def get_all_contacts(conn: connection):
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM contacts;")
@@ -15,7 +16,7 @@ class DalManager:
         conn.close()
         return data
 
-
+    @staticmethod
     def create_contact(contact: dict, conn: connection):
         cursor = conn.cursor()
         try: 
@@ -37,7 +38,7 @@ class DalManager:
         finally:
             cursor.close()
 
-
+    @staticmethod
     def update_contact(id: int, contact: dict, conn: connection):
         cursor = conn.cursor()
         try:
@@ -63,7 +64,7 @@ class DalManager:
         finally:
             cursor.close()
 
-
+    @staticmethod
     def delete_contact(id: int, conn: connection):
         cursor = conn.cursor()
         try:

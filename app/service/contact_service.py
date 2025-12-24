@@ -3,13 +3,14 @@ from dal.contact_dal import DalManager
 from fastapi import HTTPException
 
 class ServiceManager:
+    @staticmethod
     def list_contacts(conn: connection):
         data = DalManager.get_all_contacts(conn)
         if not data:
             return {"messege", "No contacts in DB"}
         return data
 
-
+    @staticmethod
     def add_contact(contact: dict, conn: connection):
         try:
             contact_id = DalManager.create_contact(contact, conn)
@@ -17,7 +18,7 @@ class ServiceManager:
         except:
             raise HTTPException(status_code=409, detail="Could not access DB")
 
-
+    @staticmethod
     def update_contact_info(id: int, contact: dict, conn: connection):
         try:
             has_updated = DalManager.update_contact(id, contact, conn)
@@ -27,7 +28,7 @@ class ServiceManager:
         except:
             raise HTTPException(status_code=409, detail="Could not access DB")
 
-
+    @staticmethod
     def remove_contact(id: int, conn: connection):
         try:
             has_deleted = DalManager.delete_contact(id, conn)
