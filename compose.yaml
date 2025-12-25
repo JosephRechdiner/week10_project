@@ -5,7 +5,8 @@ services:
     ports:
       - "8000:80"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     env_file:
       - .env
   mysql:
@@ -13,7 +14,12 @@ services:
     container_name: week10_db
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}   
+      MYSQL_DATABASE: ${DB_NAME}  
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-p ${DB_PORT}']
+      interval: 5s
+      timeout: 5s
+      retries: 5 
     env_file:
       - .env                    
     ports:
